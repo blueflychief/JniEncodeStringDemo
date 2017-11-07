@@ -30,4 +30,18 @@
         android:text="decode"
         android:textAllCaps="false" />
 
+    <Button
+        android:id="@+id/btCInvokeJava"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CInvokeJava"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btPrintAndroidLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PrintAndroidLog"
+        android:textAllCaps="false" />
+
 </LinearLayout>

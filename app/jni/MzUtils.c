@@ -1,5 +1,10 @@
 #include <jni.h>
 #include <string.h>
+
+#include <android/log.h>
+#define LOG_TAG "System.out"
+#define PRINT_LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define PRINT_LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 //将java字符串转换为c语言字符串（工具方法）
 char*   Jstring2CStr(JNIEnv*   env,   jstring   jstr)
 {
@@ -34,4 +39,34 @@ JNIEXPORT jstring JNICALL Java_com_infinite_jniapplication_MzUtils_decode(JNIEnv
          *(cstr+i) -= 1;
      }
      return (*env)->NewStringUTF(env, cstr);
+}
+
+//JNIEXPORT void JNICALL Java_com_infinite_jniapplication_MzUtils_printAndroidLog(JNIEnv * env, jobject obj){
+    //打印log输出
+    //PRINT_LOGD("我是C语言打印的debug日志");
+    //PRINT_LOGI("我是C语言打印的info日志");
+    //通过反射来调用java的方法，需要知道方法签名，使用javap得到方法签名
+    //在bin/classes目录下执行 javap -s 全类名
+    //1、得到类的字节码对象
+    //jclass      (*FindClass)(JNIEnv*, const char*);
+    //jclass clazz = (*env)->FindClass(env, "com/mwp/ccalljava2/MainActivity");
+    //jmethodID   (*GetMethodID)(JNIEnv*, jclass, const char*, const char*);
+    //jmethodID methodID = (*env)->GetMethodID(env, clazz, "show", "(Ljava/lang/String;)V");
+    //void        (*CallVoidMethod)(JNIEnv*, jobject, jmethodID, ...);
+    //(*env)->CallVoidMethod(env,obj,methodID, (*env)->NewStringUTF(env, "这是弹窗的内容"));
+//}
+
+JNIEXPORT void JNICALL Java_com_infinite_jniapplication_MainActivity_cInvokeJava(JNIEnv * env, jobject obj){
+    //打印log输出
+    //LOGD("我是C语言打印的debug日志");
+    //LOGI("我是C语言打印的info日志");
+    //通过反射来调用java的方法，需要知道方法签名，使用javap得到方法签名
+    //在bin/classes目录下执行 javap -s 全类名
+    //1、得到类的字节码对象
+    //jclass      (*FindClass)(JNIEnv*, const char*);
+    jclass clazz = (*env)->FindClass(env, "com/infinite/jniapplication/MainActivity");
+    //jmethodID   (*GetMethodID)(JNIEnv*, jclass, const char*, const char*);
+    jmethodID methodID = (*env)->GetMethodID(env, clazz, "showToast", "(Ljava/lang/String;)V");
+    //void        (*CallVoidMethod)(JNIEnv*, jobject, jmethodID, ...);
+    (*env)->CallVoidMethod(env,obj,methodID, (*env)->NewStringUTF(env, "这是Toast的内容"));
 }

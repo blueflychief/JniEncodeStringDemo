@@ -5,11 +5,13 @@ package com.infinite.jniapplication;
  */
 
 public class MzUtils {
-    static {
-        System.loadLibrary("MzUtils");
-    }
+//    static {
+//        System.loadLibrary("MzUtils");
+//    }
 
     public static native String decode(String message, int length);
 
     public static native String encode(String message, int length);
+
+    //public static native void printAndroidLog();
 }
